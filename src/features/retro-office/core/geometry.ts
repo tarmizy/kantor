@@ -68,6 +68,14 @@ export const ITEM_FOOTPRINT: Record<string, [number, number]> = {
   server_terminal: [42, 34],
   qa_terminal: [54, 38],
   kanban_board: [130, 65],
+  bean_bag: [40, 40],
+  lesehan_mat: [120, 80],
+  low_table: [60, 40],
+  rattan_chair: [24, 24],
+  water_jug: [20, 20],
+  monstera: [24, 24],
+  snake_plant: [20, 20],
+  coffee_jar: [16, 16],
   device_rack: [70, 36],
   test_bench: [90, 42],
   treadmill: [70, 35],
@@ -167,6 +175,15 @@ export const ITEM_METADATA: Record<string, { blocksNavigation: boolean; navPaddi
   easel:           { blocksNavigation: true  }, // floor-standing prop (issue #4)
   // ── water cooler ──────────────────────────────────────────────────────────
   water_cooler:    { blocksNavigation: true  }, // freestanding floor appliance (issue #4)
+  // ── indonesia lounge and pantry ───────────────────────────────────────────
+  bean_bag:        { blocksNavigation: true  }, // floor seat
+  lesehan_mat:     { blocksNavigation: false }, // floor mat, walkable
+  low_table:       { blocksNavigation: true  },
+  rattan_chair:    { blocksNavigation: false }, // passable like chair; agents sit
+  water_jug:       { blocksNavigation: true  }, // floor dispenser
+  monstera:        { blocksNavigation: true  },
+  snake_plant:     { blocksNavigation: true  },
+  coffee_jar:      { blocksNavigation: false }, // counter-top decor
   // ── decorative / small ────────────────────────────────────────────────────
   plant:           { blocksNavigation: true  },
   lamp:            { blocksNavigation: false }, // floor lamp but thin; passable in practice

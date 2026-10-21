@@ -456,3 +456,31 @@ export function SinkModel({
     </group>
   );
 }
+
+/** Glass coffee jar with a wooden lid, placed as pantry counter decor. */
+export function CoffeeJarModel({
+  widthWorld,
+  depthWorld,
+}: {
+  widthWorld: number;
+  depthWorld: number;
+}) {
+  const radius = Math.min(widthWorld, depthWorld) * 0.3;
+  return (
+    <group>
+      <mesh position={[0, 0.1, 0]} castShadow>
+        <cylinderGeometry args={[radius, radius, 0.2, 16]} />
+        <meshPhysicalMaterial color="#e8dccb" transparent opacity={0.4} roughness={0.05} metalness={0} />
+      </mesh>
+      {/* Ground coffee inside the jar. */}
+      <mesh position={[0, 0.07, 0]}>
+        <cylinderGeometry args={[radius * 0.92, radius * 0.92, 0.12, 16]} />
+        <meshStandardMaterial color="#5d3a1a" roughness={0.9} metalness={0} />
+      </mesh>
+      <mesh position={[0, 0.21, 0]} castShadow>
+        <cylinderGeometry args={[radius * 1.05, radius * 1.05, 0.05, 16]} />
+        <meshStandardMaterial color="#8b5e3c" roughness={0.7} metalness={0} />
+      </mesh>
+    </group>
+  );
+}

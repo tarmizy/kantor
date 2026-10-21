@@ -16,6 +16,7 @@ import {
 import { getBrushedMetalTextures } from "@/features/retro-office/core/proceduralTextures";
 import type { FurnitureItem } from "@/features/retro-office/core/types";
 import type { InteractiveFurnitureModelProps } from "@/features/retro-office/objects/types";
+import { INDONESIA_ITEM_MODELS } from "@/features/retro-office/objects/indonesia";
 
 export const FURNITURE_GLB: Record<string, string> = {
   desk_cubicle: "/office-assets/models/furniture/desk.glb",
@@ -583,6 +584,7 @@ export function FurnitureModel({
   const { width, height } = getItemBaseSize(item);
   const pivotX = width * SCALE * 0.5;
   const pivotZ = height * SCALE * 0.5;
+  const IndonesiaModel = INDONESIA_ITEM_MODELS[itemType];
   const highlightColor = isSelected
     ? "#fbbf24"
     : isHovered && editMode
@@ -794,7 +796,9 @@ export function FurnitureModel({
       }}
     >
       <group position={[pivotX, 0, pivotZ]} rotation={[0, rotY, 0]}>
-        {itemType === "whiteboard" ? (
+        {IndonesiaModel ? (
+          <IndonesiaModel widthWorld={width * SCALE} depthWorld={height * SCALE} />
+        ) : itemType === "whiteboard" ? (
           <WhiteboardProceduralModel
             widthWorld={width * SCALE}
             depthWorld={height * SCALE}
