@@ -72,6 +72,55 @@ const clampSpeechBubbleText = (value: string) => {
   return { text: `${slice}…`, truncated: true };
 };
 
+// Stable hash of the agent id, so each agent keeps the same shirt every visit.
+const hashAgentId = (agentId: string) => {
+  let hash = 0;
+  for (let index = 0; index < agentId.length; index += 1) {
+    hash = (hash * 31 + agentId.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+};
+
+let batikShirtTexture: THREE.CanvasTexture | null = null;
+
+// Small kawung-style motif for plain shirts. Light base so the shirt color
+// still tints it when multiplied.
+const getBatikShirtTexture = () => {
+  if (batikShirtTexture) return batikShirtTexture;
+  const canvas = document.createElement("canvas");
+  canvas.width = 64;
+  canvas.height = 64;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  ctx.fillStyle = "#f7f1e6";
+  ctx.fillRect(0, 0, 64, 64);
+  ctx.fillStyle = "#c9a36b";
+  for (const [cx, cy] of [
+    [16, 16],
+    [48, 16],
+    [16, 48],
+    [48, 48],
+  ]) {
+    for (const [dx, dy] of [
+      [0, -6],
+      [6, 0],
+      [0, 6],
+      [-6, 0],
+    ]) {
+      ctx.beginPath();
+      ctx.ellipse(cx + dx, cy + dy, 3, 5, dx === 0 ? 0 : Math.PI / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.needsUpdate = true;
+  batikShirtTexture = texture;
+  return texture;
+};
+
 export const AgentModel = memo(function AgentModel({
   agentId,
   name,
@@ -620,6 +669,14 @@ export const AgentModel = memo(function AgentModel({
   const cuffColor = topStyle === "hoodie" ? "#d1d5db" : sleeveColor;
   // Jacket accent brightened ~10% so it doesn't turn muddy under ACES tone mapping.
   const topAccentColor = topStyle === "jacket" ? "#2a3648" : cuffColor;
+  // About half of the plain-tee agents wear a batik-print shirt.
+  const batikShirtMap = useMemo(
+    () =>
+      topStyle === "tee" && hashAgentId(agentId) % 2 === 0
+        ? getBatikShirtTexture()
+        : null,
+    [agentId, topStyle],
+  );
 
   const faceTexture = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -826,7 +883,7 @@ export const AgentModel = memo(function AgentModel({
       ) : null}
       <mesh position={[0, 0.28, 0]} castShadow receiveShadow>
         <boxGeometry args={[0.18, 0.2, 0.1]} />
-        <meshStandardMaterial ref={bodyMatRef} color={topColor} roughness={0.75} />
+        <meshStandardMaterial ref={bodyMatRef} color={topColor} map={batikShirtMap} roughness={0.75} />
       </mesh>
       {topStyle === "hoodie" ? (
         <>
