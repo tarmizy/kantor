@@ -555,6 +555,17 @@ const DEFAULT_FURNITURE: FurnitureSeed[] = [
   ...DEFAULT_ART_ROOM_ITEMS,
   DEFAULT_SMS_BOOTH,
   { type: "chair", x: 100, y: 200, facing: 180 },
+  // Indonesian lounge: floor mat with a low table, rattan seats, and a bean bag.
+  { type: "lesehan_mat", x: 700, y: 620 },
+  { type: "low_table", x: 700, y: 620 },
+  { type: "rattan_chair", x: 668, y: 600, facing: 45 },
+  { type: "rattan_chair", x: 732, y: 640, facing: 225 },
+  { type: "bean_bag", x: 800, y: 620 },
+  // Pantry: water dispenser and coffee jar beside the coffee machine.
+  { type: "water_jug", x: 1000, y: 118 },
+  { type: "coffee_jar", x: 905, y: 22, elevation: 0.56 },
+  { type: "monstera", x: 860, y: 660 },
+  { type: "snake_plant", x: 1040, y: 270 },
 ];
 
 export const materializeDefaults = (
