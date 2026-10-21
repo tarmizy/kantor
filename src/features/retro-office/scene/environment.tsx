@@ -27,14 +27,15 @@ import {
   getWoodFloorTextures,
   withRepeat,
 } from "@/features/retro-office/core/proceduralTextures";
+import { OFFICE_THEME } from "@/features/retro-office/core/theme";
 
 function FramedPicture({
   position,
   rotY = 0,
   w = 0.52,
   h = 0.38,
-  frameColor = "#1c1008",
-  bgColor = "#f0ece0",
+  frameColor = OFFICE_THEME.woodWarm,
+  bgColor = OFFICE_THEME.wallBase,
   art,
 }: {
   position: [number, number, number];
@@ -209,7 +210,7 @@ function PerimeterWall({
       <mesh position={[0, wallHeight / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={dims(length, wallHeight, thickness)} />
         <meshStandardMaterial
-          color="#e9dfd0"
+          color={OFFICE_THEME.wallBase}
           map={plaster.map}
           roughnessMap={plaster.roughnessMap}
           normalMap={plaster.normalMap}
@@ -220,7 +221,7 @@ function PerimeterWall({
       </mesh>
       <mesh position={[0, wallHeight + capHeight / 2, 0]} castShadow>
         <boxGeometry args={dims(length, capHeight, thickness)} />
-        <meshStandardMaterial color="#2b2f33" roughness={0.42} metalness={0.68} />
+        <meshStandardMaterial color={OFFICE_THEME.trim} roughness={0.42} metalness={0.68} />
       </mesh>
     </group>
   );
@@ -361,7 +362,7 @@ export const FloorAndWalls = memo(function FloorAndWalls({
       >
         <planeGeometry args={[localOfficeWidth, localOfficeHeight, 22, 14]} />
         <meshPhysicalMaterial
-          color="#e8d5b8"
+          color={OFFICE_THEME.floorWood}
           map={woodFloor.map}
           roughnessMap={woodFloor.roughnessMap}
           normalMap={woodFloor.normalMap}
@@ -381,7 +382,7 @@ export const FloorAndWalls = memo(function FloorAndWalls({
           >
             <planeGeometry args={[localOfficeWidth, localOfficeHeight, 22, 14]} />
             <meshPhysicalMaterial
-              color="#e8d5b8"
+              color={OFFICE_THEME.floorWood}
               map={woodFloor.map}
               roughnessMap={woodFloor.roughnessMap}
               normalMap={woodFloor.normalMap}
@@ -829,7 +830,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={0}
         w={0.58}
         h={0.42}
-        frameColor="#1a0e06"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#f8f4ec"
         art={
           <>
@@ -862,7 +863,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={0}
         w={0.64}
         h={0.4}
-        frameColor="#2a1a0a"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#a8d8f0"
         art={
           <>
@@ -895,7 +896,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={0}
         w={0.5}
         h={0.42}
-        frameColor="#1a0e06"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#f0d090"
         art={
           <>
@@ -952,7 +953,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={Math.PI}
         w={0.6}
         h={0.4}
-        frameColor="#1c1008"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#e8e0f0"
         art={
           <>
@@ -1007,7 +1008,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={Math.PI}
         w={0.46}
         h={0.42}
-        frameColor="#2a2008"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#d4c8a8"
         art={
           <>
@@ -1036,7 +1037,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={-Math.PI / 2}
         w={0.52}
         h={0.4}
-        frameColor="#1c1008"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#f0c840"
         art={
           <>
@@ -1094,7 +1095,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={Math.PI / 2}
         w={0.56}
         h={0.42}
-        frameColor="#1c1008"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#1a2840"
         art={
           <>
@@ -1115,7 +1116,7 @@ export const WallPictures = memo(function WallPictures({
         rotY={Math.PI / 2}
         w={0.48}
         h={0.44}
-        frameColor="#2a1a0a"
+        frameColor={OFFICE_THEME.woodWarm}
         bgColor="#f8f4e8"
         art={
           <>
