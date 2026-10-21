@@ -28,7 +28,10 @@ import {
   withRepeat,
 } from "@/features/retro-office/core/proceduralTextures";
 import { OFFICE_THEME } from "@/features/retro-office/core/theme";
-import { IndonesiaFlagArt } from "@/features/retro-office/scene/indonesiaArt";
+import {
+  IndonesiaFlagArt,
+  PosterArt,
+} from "@/features/retro-office/scene/indonesiaArt";
 
 function FramedPicture({
   position,
@@ -1093,6 +1096,44 @@ export const WallPictures = memo(function WallPictures({
             </mesh>
           </>
         }
+      />
+
+      {/* Office posters on open wall space, between the existing pictures. */}
+      <FramedPicture
+        position={[localCenterX - 12.5, pictureY, northZ]}
+        rotY={0}
+        w={0.58}
+        h={0.42}
+        frameColor={OFFICE_THEME.trim}
+        bgColor={OFFICE_THEME.wallBase}
+        art={<PosterArt kind="gas" width={0.5} height={0.352} />}
+      />
+      <FramedPicture
+        position={[localCenterX + 12.5, pictureY, northZ]}
+        rotY={0}
+        w={0.58}
+        h={0.42}
+        frameColor={OFFICE_THEME.trim}
+        bgColor={OFFICE_THEME.wallBase}
+        art={<PosterArt kind="ship" width={0.5} height={0.352} />}
+      />
+      <FramedPicture
+        position={[localCenterX - 11, pictureY, southZ]}
+        rotY={Math.PI}
+        w={0.58}
+        h={0.42}
+        frameColor={OFFICE_THEME.trim}
+        bgColor={OFFICE_THEME.wallBase}
+        art={<PosterArt kind="kopi" width={0.5} height={0.352} />}
+      />
+      <FramedPicture
+        position={[localCenterX + 11, pictureY, southZ]}
+        rotY={Math.PI}
+        w={0.58}
+        h={0.42}
+        frameColor={OFFICE_THEME.trim}
+        bgColor={OFFICE_THEME.wallBase}
+        art={<PosterArt kind="logo" width={0.5} height={0.352} />}
       />
 
       {null}
