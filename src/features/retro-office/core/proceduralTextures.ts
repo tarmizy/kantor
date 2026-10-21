@@ -4,6 +4,7 @@
 // and results are cached, so repeated callers share GPU textures.
 
 import * as THREE from "three";
+import { OFFICE_THEME } from "@/features/retro-office/core/theme";
 
 export type PbrTextureSet = {
   map: THREE.Texture | null;
@@ -445,6 +446,53 @@ export const getGrassTextures = (): PbrTextureSet =>
  * Returns a copy of the set with repeat applied. Textures are cloned (images
  * are shared, so this is cheap) letting different meshes tile independently.
  */
+/**
+ * Kawung batik motif: rows of four-petal ellipses with a small center dot,
+ * drawn on a warm wood background. Colors come from the office theme.
+ */
+export const getBatikTextures = (): PbrTextureSet =>
+  cached("batik-kawung", () => {
+    const albedo = makeCanvas(512);
+    const rough = makeCanvas(512);
+    if (!albedo || !rough) return EMPTY_SET;
+    const { ctx, size } = albedo;
+    ctx.fillStyle = OFFICE_THEME.woodWarm;
+    ctx.fillRect(0, 0, size, size);
+
+    const cell = size / 4;
+    for (let row = 0; row < 4; row += 1) {
+      for (let column = 0; column < 4; column += 1) {
+        const cx = column * cell + cell / 2;
+        const cy = row * cell + cell / 2;
+        const tilt = (row + column) % 2 === 0 ? 0 : Math.PI / 2;
+        for (let petal = 0; petal < 4; petal += 1) {
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(tilt + (petal * Math.PI) / 2);
+          ctx.beginPath();
+          ctx.ellipse(0, -cell * 0.2, cell * 0.11, cell * 0.22, 0, 0, Math.PI * 2);
+          ctx.fillStyle = OFFICE_THEME.wallBase;
+          ctx.globalAlpha = 0.85;
+          ctx.fill();
+          ctx.restore();
+        }
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, cell * 0.06, 0, Math.PI * 2);
+        ctx.fillStyle = OFFICE_THEME.rattan;
+        ctx.fill();
+      }
+    }
+
+    rough.ctx.fillStyle = "rgb(214, 214, 214)";
+    rough.ctx.fillRect(0, 0, size, size);
+    return {
+      map: toTexture(albedo.canvas, { srgb: true }),
+      roughnessMap: toTexture(rough.canvas),
+      normalMap: null,
+    };
+  });
+
 export const withRepeat = (
   set: PbrTextureSet,
   repeatX: number,
