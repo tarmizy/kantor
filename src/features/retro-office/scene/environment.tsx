@@ -29,6 +29,10 @@ import {
 } from "@/features/retro-office/core/proceduralTextures";
 import { OFFICE_THEME } from "@/features/retro-office/core/theme";
 import {
+  CitySkyline,
+  MotorbikeParking,
+} from "@/features/retro-office/scene/cityDecor";
+import {
   IndonesiaFlagArt,
   PosterArt,
 } from "@/features/retro-office/scene/indonesiaArt";
@@ -390,6 +394,9 @@ export const FloorAndWalls = memo(function FloorAndWalls({
               metalness={0.02}
             />
           </mesh>
+
+          <CitySkyline />
+          <MotorbikeParking />
 
           {Array.from({ length: 8 }).map((_, index) => {
             const [wx, , wz] = toWorld(330 + index * 170, 820 + (index % 2 === 0 ? -44 : 44));
