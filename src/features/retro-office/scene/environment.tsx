@@ -33,6 +33,7 @@ import {
   MotorbikeParking,
 } from "@/features/retro-office/scene/cityDecor";
 import {
+  BrandLogoArt,
   IndonesiaFlagArt,
   PosterArt,
 } from "@/features/retro-office/scene/indonesiaArt";
@@ -1136,11 +1137,11 @@ export const WallPictures = memo(function WallPictures({
       <FramedPicture
         position={[localCenterX + 11, pictureY, southZ]}
         rotY={Math.PI}
-        w={0.58}
-        h={0.42}
+        w={0.46}
+        h={0.46}
         frameColor={OFFICE_THEME.trim}
         bgColor={OFFICE_THEME.wallBase}
-        art={<PosterArt kind="logo" width={0.5} height={0.352} />}
+        art={<BrandLogoArt size={0.36} />}
       />
 
       {null}

@@ -21,6 +21,7 @@ bendera kantor lokal.
 | `src/features/retro-office/objects/indonesia.tsx` | Model furnitur baru (bean bag, tikar lesehan, meja pendek, kursi rotan, galon, monstera, lidah mertua) dan registry `INDONESIA_ITEM_MODELS` |
 | `src/features/retro-office/scene/cityDecor.tsx` | Skyline gedung (`CitySkyline`) dan parkiran motor (`MotorbikeParking`) |
 | `tests/unit/indonesiaFurnitureLayout.test.ts` | Tes registrasi dan penempatan furnitur baru |
+| `public/brand/codday-logo.png` | Logo Codday, dipasang di dinding selatan kantor lokal (`BrandLogoArt`) |
 | `CUSTOMIZATION.md` | Dokumen ini |
 
 ### File yang diubah
@@ -64,11 +65,34 @@ memakai token. Itu disengaja agar perubahan tetap kecil.
 - **Teks logo dan poster:** ubah `POSTER_SPECS` di `scene/indonesiaArt.tsx`.
   Poster "Codday996" ada di `logo`.
 - **Warna:** ubah nilai di `core/theme.ts`. Jangan mengedit hex langsung di komponen.
+- **Logo:** ganti file `public/brand/codday-logo.png` dengan file baru (persegi, misalnya 1080 x 1080). Nama file juga bisa diubah di `BRAND_LOGO_PATH` di `scene/indonesiaArt.tsx`.
 - **Bendera:** `IndonesiaFlagArt` di `scene/indonesiaArt.tsx`. Ukuran rasio 2:3 ada di
   `FLAG_WIDTH` dan `FLAG_HEIGHT`.
 - **Setelah mengubah penempatan default:** naikkan `STORAGE_KEY` di
   `core/constants.ts`. Browser yang sudah menyimpan layout lama tidak akan melihat
   perubahan sampai key di-bump.
+
+## Keamanan dependency
+
+Hasil `npm audit` saat ini: 5 temuan, dari 21 sebelumnya. Semuanya tingkat high dan
+berasal dari satu rantai dependency lint (`eslint-config-next` → `@next/eslint-plugin-next`
+→ `fast-glob` → `micromatch` → `braces`). Rantai ini hanya dipakai saat lint, tidak ikut ke
+build produksi. Untuk `braces` belum ada versi patch di npm. Satu-satunya saran dari npm
+adalah `npm audit fix --force`, yaitu downgrade `eslint-config-next` ke 14.x. Itu breaking,
+jadi tidak dilakukan.
+
+Yang sudah diperbaiki:
+- `next` 16.1.7 → 16.4.2 (menutup critical).
+- `vitest` 4.0.18 → 4.1.12 (menutup critical dan moderate).
+- `vite`, `ws`, `js-yaml`, `source-map-js`, `fflate`, `@humanfs/node`, `browserslist`,
+  `baseline-browser-mapping`, `@babel/core`, dan `brace-expansion` dikunci lewat `overrides` di `package.json`.
+- `postprocessing` dan `@testing-library/dom` sekarang dipasang eksplisit. Sebelumnya keduanya
+  hanya ikut sebagai peer dependency.
+- `eslint-plugin-react-hooks` dikunci ke 7.0.1. Versi 7.1.1 menambah aturan React Compiler yang
+  membuat 48 error lint pada kode yang sudah ada.
+
+Catatan saat upgrade: `npm audit fix` bawaan gagal dengan error internal npm
+(`Cannot read properties of null (reading edgesOut)`), jadi upgrade dilakukan manual.
 
 ## Cara merge update upstream
 

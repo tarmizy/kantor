@@ -27,7 +27,7 @@ export function IndonesiaFlagArt() {
   );
 }
 
-export type PosterKind = "gas" | "ship" | "kopi" | "logo";
+export type PosterKind = "gas" | "ship" | "kopi";
 
 type PosterSpec = {
   lines: string[];
@@ -54,12 +54,6 @@ const POSTER_SPECS: Record<PosterKind, PosterSpec> = {
     background: OFFICE_THEME.woodWarm,
     foreground: OFFICE_THEME.textLight,
     accent: OFFICE_THEME.rattan,
-  },
-  logo: {
-    lines: ["Codday996"],
-    background: OFFICE_THEME.trim,
-    foreground: OFFICE_THEME.textLight,
-    accent: OFFICE_THEME.accentRed,
   },
 };
 
@@ -135,6 +129,33 @@ export function PosterArt({
     <mesh>
       <planeGeometry args={[width, height]} />
       <meshBasicMaterial map={texture} toneMapped={false} />
+    </mesh>
+  );
+}
+
+const BRAND_LOGO_PATH = "/brand/codday-logo.png";
+
+let brandLogoTexture: THREE.Texture | null = null;
+
+/**
+ * Brand logo texture from /public. It loads in the background, so the wall
+ * shows the placeholder color until the image arrives. No Suspense needed.
+ */
+const getBrandLogoTexture = () => {
+  if (!brandLogoTexture) {
+    brandLogoTexture = new THREE.TextureLoader().load(BRAND_LOGO_PATH);
+    brandLogoTexture.colorSpace = THREE.SRGBColorSpace;
+    brandLogoTexture.anisotropy = 8;
+  }
+  return brandLogoTexture;
+};
+
+/** Square brand logo sized to fill a FramedPicture's inner area. */
+export function BrandLogoArt({ size }: { size: number }) {
+  return (
+    <mesh>
+      <planeGeometry args={[size, size]} />
+      <meshBasicMaterial map={getBrandLogoTexture()} toneMapped={false} />
     </mesh>
   );
 }
