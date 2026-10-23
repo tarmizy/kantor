@@ -1,7 +1,7 @@
 # Hermes3D — A 3D Workspace for AI Agents
 
 <p align="center">
-    <img src="assets/branding/hermes3d-hero.png" alt="Hermes3D" width="700">
+    <img src="assets/branding/codday-office-hero.png" alt="Codday office, rendered with Hermes3D" width="700">
 </p>
 
 <p align="center">

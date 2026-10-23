@@ -170,3 +170,10 @@ Urutkan dari yang paling mungkin konflik:
 
 Jika disetujui, implementasi akan mengikuti pola di atas dan menaikkan
 `STORAGE_KEY` ke `hermes-office-furniture-v12-id`.
+
+## README
+
+Gambar hero di `README.md` diganti ke `assets/branding/codday-office-hero.png`, yaitu
+render 3D dari kantor ini. Gambar upstream `assets/branding/hermes3d-hero.png` tidak dihapus.
+Hanya satu baris di README yang berubah. Ini menyimpang dari aturan awal untuk tidak mengubah
+README upstream, atas permintaan eksplisit. Untuk mengembalikan, cukup ubah `src` di tag `<img>`.
